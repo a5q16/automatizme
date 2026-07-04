@@ -9,7 +9,7 @@ export default function WalletBadge() {
   useEffect(() => {
     const fetchWallet = async () => {
       try {
-        const res = await fetch('/api/admin/wallet');
+        const res = await fetch('/api/admin/wallet', { credentials: 'include' });
         if (res.ok) {
           const data = await res.json();
           setWallet(data);

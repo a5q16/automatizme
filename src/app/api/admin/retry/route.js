@@ -7,6 +7,8 @@
  * Re-triggers the purchase flow for a failed order.
  */
 
+export const dynamic = 'force-dynamic';
+
 import { isAdminAuthenticated, unauthorizedResponse } from '@/lib/admin-auth';
 import { retryOrder } from '@/lib/order-processor';
 

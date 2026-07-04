@@ -14,7 +14,7 @@ export default function OrderTable() {
 
   const fetchOrders = async () => {
     try {
-      const res = await fetch('/api/admin/orders');
+      const res = await fetch('/api/admin/orders', { credentials: 'include' });
       if (res.ok) {
         const data = await res.json();
         setOrders(data.orders || []);
@@ -37,6 +37,7 @@ export default function OrderTable() {
       const res = await fetch('/api/admin/retry', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
         body: JSON.stringify({ orderId })
       });
       

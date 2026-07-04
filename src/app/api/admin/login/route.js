@@ -47,7 +47,7 @@ export async function POST(request) {
     cookieStore.set('admin_session', `${sessionToken}:${sessionHash}`, {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
-      sameSite: 'strict',
+      sameSite: 'lax',
       path: '/',
       maxAge: SESSION_DURATION_MS / 1000,
     });

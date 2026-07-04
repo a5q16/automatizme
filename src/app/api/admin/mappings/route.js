@@ -9,6 +9,8 @@
  * Manages the Digiseller Product → Canboso Product mappings.
  */
 
+export const dynamic = 'force-dynamic';
+
 import { isAdminAuthenticated, unauthorizedResponse } from '@/lib/admin-auth';
 import { db, admin } from '@/lib/firebase';
 

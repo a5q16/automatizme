@@ -12,7 +12,7 @@ export default function AdminMappings() {
 
   const fetchMappings = async () => {
     try {
-      const res = await fetch('/api/admin/mappings');
+      const res = await fetch('/api/admin/mappings', { credentials: 'include' });
       if (res.ok) {
         const data = await res.json();
         setMappings(data.mappings || []);

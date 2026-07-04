@@ -7,6 +7,8 @@
  * and optionally attempts a live check via the API.
  */
 
+export const dynamic = 'force-dynamic';
+
 import { isAdminAuthenticated, unauthorizedResponse } from '@/lib/admin-auth';
 import { db } from '@/lib/firebase';
 import { listProducts } from '@/lib/canboso';

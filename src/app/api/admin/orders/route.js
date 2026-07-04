@@ -5,6 +5,8 @@
  * POST /api/admin/orders (action: reset)   — Reset emergency kill-switch
  */
 
+export const dynamic = 'force-dynamic';
+
 import { isAdminAuthenticated, unauthorizedResponse } from '@/lib/admin-auth';
 import { db } from '@/lib/firebase';
 import { resetEmergency } from '@/lib/order-processor';
