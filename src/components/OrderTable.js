@@ -19,9 +19,12 @@ export default function OrderTable() {
         const data = await res.json();
         setOrders(data.orders || []);
       } else {
+        const errData = await res.text();
+        console.error('Failed to fetch orders data. Status:', res.status, 'Response:', errData);
         setError('Failed to fetch orders data.');
       }
     } catch (err) {
+      console.error('Network or parsing error fetching orders:', err);
       setError('An error occurred while fetching orders.');
     } finally {
       setLoading(false);

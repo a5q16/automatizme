@@ -13,9 +13,12 @@ export default function WalletBadge() {
         if (res.ok) {
           const data = await res.json();
           setWallet(data);
+        } else {
+          const errData = await res.text();
+          console.error('Failed to fetch wallet info. Status:', res.status, 'Response:', errData);
         }
       } catch (err) {
-        console.error('Failed to fetch wallet info:', err);
+        console.error('Network or parsing error fetching wallet info:', err);
       } finally {
         setLoading(false);
       }
