@@ -1,17 +1,6 @@
-/**
- * Admin Login API
- * 
- * POST /api/admin/login
- * 
- * Validates admin password and sets an HTTP-only session cookie.
- */
-
 import { cookies } from 'next/headers';
-import { createHash, randomBytes } from 'node:crypto';
+import { createHash } from 'node:crypto';
 
-// Session tokens stored in memory (Vercel serverless — each instance is short-lived)
-// For production with multiple instances, you'd use Firestore sessions
-// For a single admin user, this is more than sufficient
 const SESSION_DURATION_MS = 24 * 60 * 60 * 1000; // 24 hours
 
 export async function POST(request) {
@@ -29,22 +18,17 @@ export async function POST(request) {
       return Response.json({ error: 'Admin not configured' }, { status: 500 });
     }
 
-    // Constant-time comparison to prevent timing attacks
-    const inputHash = createHash('sha256').update(password).digest('hex');
-    const correctHash = createHash('sha256').update(adminPassword).digest('hex');
-
-    if (inputHash !== correctHash) {
+    if (password !== adminPassword) {
       console.warn('[ADMIN_LOGIN] Failed login attempt');
       return Response.json({ error: 'Invalid password' }, { status: 401 });
     }
 
-    // Generate session token
-    const sessionToken = randomBytes(32).toString('hex');
-    const sessionHash = createHash('sha256').update(sessionToken).digest('hex');
+    // Create a deterministic secure token based on your actual password
+    const sessionToken = createHash('sha256').update(adminPassword + 'digiseller_secure_salt').digest('hex');
 
     // Set cookie
     const cookieStore = await cookies();
-    cookieStore.set('admin_session', `${sessionToken}:${sessionHash}`, {
+    cookieStore.set('admin_session', sessionToken, {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
       sameSite: 'lax',
